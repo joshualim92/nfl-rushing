@@ -6,7 +6,11 @@ import db from './rushing.json';
 
 const parser = (value: any) => numberParsing(value, { us: 1 });
 
-const sorter = (orderBy: string, orderDirection: 'asc' | 'desc') => {
+const sorter = (orderBy?: string, orderDirection: 'asc' | 'desc' = 'desc') => {
+  if (!orderBy) {
+    return () => 0;
+  }
+
   if (orderDirection === 'desc') {
     return (a: any, b: any) => {
       if (parser(a[orderBy]) > parser(b[orderBy])) {
@@ -47,20 +51,20 @@ const playersProvider: PlayersProvider = {
     filter: searchFilter,
     orderBy,
     orderDirection,
-    page,
+    page = 1,
     pageSize,
   }) => {
     const data = <Array<FootballPlayer>>(
       db.sort(sorter(orderBy, orderDirection)).filter(filter(searchFilter))
     );
 
-    const startIndex = (page - 1) * pageSize;
+    const startIndex = pageSize ? (page - 1) * pageSize : 0;
 
     return {
       count: data.length,
-      data: data.slice(startIndex, startIndex + pageSize),
+      data: pageSize ? data.slice(startIndex, startIndex + pageSize) : data,
       page,
-      pageSize,
+      pageSize: pageSize || data.length,
     };
   },
 };

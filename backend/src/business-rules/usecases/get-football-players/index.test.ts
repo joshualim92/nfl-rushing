@@ -77,35 +77,20 @@ describe('Get Football Players', () => {
     );
   });
 
-  it('should call getFootballPlayers with default page, limit and sort if none are passed in', async () => {
+  it('should call getFootballPlayers with params passed in request', async () => {
     const playersProvider: PlayersProvider = {
       getFootballPlayers: jest.fn().mockResolvedValue(sampleResponse),
     };
 
-    expect(await getFootballPlayers({ ...deps, playersProvider })({})).toEqual(
-      sampleResponse,
-    );
-
-    expect(playersProvider.getFootballPlayers).toHaveBeenCalledWith({
-      orderBy: 'Yds',
-      orderDirection: 'desc',
-      page: 1,
-      pageSize: 20,
-    });
-  });
-
-  it('should call getFootballPlayers with params passed in request', async () => {
-    const playersProvider: PlayersProvider = {
-      getFootballPlayers: jest.fn(),
-    };
-
-    await getFootballPlayers({ ...deps, playersProvider })({
-      orderBy: 'Lng',
-      orderDirection: 'asc',
-      page: 2,
-      pageSize: 50,
-      playerFilter: 'foo',
-    });
+    expect(
+      await getFootballPlayers({ ...deps, playersProvider })({
+        orderBy: 'Lng',
+        orderDirection: 'asc',
+        page: 2,
+        pageSize: 50,
+        playerFilter: 'foo',
+      }),
+    ).toEqual(sampleResponse);
 
     expect(playersProvider.getFootballPlayers).toHaveBeenCalledWith({
       orderBy: 'Lng',

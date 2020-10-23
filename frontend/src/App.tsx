@@ -39,6 +39,14 @@ const App: FC = () => {
     <main className="main-container">
       <h1 className="heading">NFL Rushing</h1>
 
+      <a
+        href={`http://localhost:4000/football-players/download?playerFilter=${playerFilter}&orderBy=${orderBy}&orderDirection=${orderDirection}`}
+      >
+        <button className="download-button" type="button">
+          Download
+        </button>
+      </a>
+
       {/* TODO: Performance wise this isn't great. Some kind of debouncing would be better */}
       <Input
         id="filter"
