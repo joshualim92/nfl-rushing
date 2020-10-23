@@ -10,8 +10,6 @@ import {
 const getFootballPlayers = (
   usecase: GetFootballPlayersUseCase,
 ): RequestHandler => async (req, res) => {
-  console.log('here mofo req.params', req.params);
-  console.log('here mofo req.query', req.query);
   const request: Request = {
     orderBy:
       req.query.orderBy && typeof req.query.orderBy === 'string'
@@ -35,7 +33,6 @@ const getFootballPlayers = (
         : undefined,
   };
 
-  console.log('here mofo request', request);
   try {
     const response = await usecase(request);
     res.send(response);
