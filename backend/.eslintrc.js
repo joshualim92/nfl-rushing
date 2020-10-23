@@ -20,7 +20,6 @@ module.exports = {
     'no-console': 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'sort-imports': ['error', { ignoreDeclarationSort: true }],
-    'sort-keys': 'error',
   },
   settings: {
     'import/resolver': {
